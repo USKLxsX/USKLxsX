@@ -1,19 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicControl : MonoBehaviour
 {
-    [Header("Movement Settings")]
+    [Header("Player Settings")]
     public float baseMoveSpeed = 5f;
     public float baseJumpForce = 7f;
+    public float playerDamage = 10f;
+    public float attackCooldown = 0.5f;
 
     [Header("Ground Detection")]
     public Transform groundCheck;    // Assign an empty child object here
     public float groundCheckRadius = 0.2f;
-    public LayerMask groundLayer;    // Select your "Ground" layer here
+    public LayerMask groundLayer;
 
-    private Rigidbody2D _rb;
+    [Header("Attack Point")]
+    public Transform attackPoint;
+    public float attackRange;
+    public LayerMask enemyLayer;
+
+    private Rigidbody _rb;
     private float _currentMoveSpeed;
     private SpriteRenderer _sr;
     private bool _isDead = false;
@@ -21,13 +29,15 @@ public class BasicControl : MonoBehaviour
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody>();
         if (transform.childCount > 0)
             _sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
             
         _currentMoveSpeed = baseMoveSpeed;
     }
 
+    private float _nextAttackTime = 0f;
+    
     void Update()
     {
         if (_isDead) return;
@@ -38,17 +48,18 @@ public class BasicControl : MonoBehaviour
         
         HandleJump();
         
+        Attack();
+        
         float h = Input.GetAxis("Horizontal");
         if (h != 0 && _sr != null)
         {
-            _sr.flipX = h > 0; // Note: Depending on sprite, this might need to be h < 0
+            _sr.flipX = h > 0;
         }
     }
 
     void CheckGround()
     {
-        // Creates a small invisible circle at the feet to see if it touches the Ground Layer
-        _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        _isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
     void HandleJump()
@@ -56,7 +67,7 @@ public class BasicControl : MonoBehaviour
         // Jump only if Space is pressed AND we are touching the ground
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, baseJumpForce);
+            _rb.velocity = new Vector3(_rb.velocity.x, baseJumpForce, _rb.velocity.z);
         }
     }
 
@@ -64,7 +75,7 @@ public class BasicControl : MonoBehaviour
     {
         // Removed the specific KeyCode check to allow Joystick/Arrow support automatically
         float h = Input.GetAxis("Horizontal");
-        _rb.velocity = new Vector2(h * _currentMoveSpeed, _rb.velocity.y);
+        _rb.velocity = new Vector3(h * _currentMoveSpeed, _rb.velocity.y, _rb.velocity.z);
     }
     
     // Visualization for the Editor to see the ground check circle
@@ -74,6 +85,36 @@ public class BasicControl : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
+        if (attackPoint != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        }
+    }
+    
+    private void Attack()
+    {
+        if (Time.time >= _nextAttackTime)
+        {
+            if (Input.GetKeyDown(KeyCode.X)) 
+            {
+                Debug.Log("Try to perform attack");
+                
+                Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
+
+                foreach (Collider enemy in hitEnemies)
+                {
+                    Monster monster = enemy.GetComponent<Monster>();
+
+                    if (monster != null)
+                    {
+                        monster.TakeDamage(playerDamage);
+                    }
+                }
+                
+                _nextAttackTime = Time.time + attackCooldown;
+            }
         }
     }
 }
