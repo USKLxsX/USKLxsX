@@ -4,126 +4,137 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    // 主菜单按钮
     [SerializeField] private Button startButton;
     [SerializeField] private Button tutorialButton;
     [SerializeField] private Button galleryButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
 
-    // 面板（在编辑器中拖拽赋值）
     [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private GameObject galleryPanel;
     [SerializeField] private GameObject settingsPanel;
 
-    // 面板的关闭按钮
     [SerializeField] private Button tutorialCloseButton;
     [SerializeField] private Button galleryCloseButton;
     [SerializeField] private Button settingsCloseButton;
 
     void Start()
     {
-        // 绑定主菜单按钮事件
+        // 绑定主菜单按钮
         if (startButton != null) startButton.onClick.AddListener(StartGame);
-        if (tutorialButton != null) tutorialButton.onClick.AddListener(ShowTutorialPanel);
-        if (galleryButton != null) galleryButton.onClick.AddListener(ShowGalleryPanel);
-        if (settingsButton != null) settingsButton.onClick.AddListener(ShowSettingsPanel);
+        if (tutorialButton != null) tutorialButton.onClick.AddListener(OpenTutorial);
+        if (galleryButton != null) galleryButton.onClick.AddListener(OpenGallery);
+        if (settingsButton != null) settingsButton.onClick.AddListener(OpenSettings);
         if (quitButton != null) quitButton.onClick.AddListener(QuitGame);
 
-        // 绑定面板关闭按钮事件
-        if (tutorialCloseButton != null) tutorialCloseButton.onClick.AddListener(HideTutorialPanel);
-        if (galleryCloseButton != null) galleryCloseButton.onClick.AddListener(HideGalleryPanel);
-        if (settingsCloseButton != null) settingsCloseButton.onClick.AddListener(HideSettingsPanel);
+        // 绑定关闭按钮
+        if (tutorialCloseButton != null)
+            tutorialCloseButton.onClick.AddListener(CloseTutorial);
+
+        if (galleryCloseButton != null)
+            galleryCloseButton.onClick.AddListener(CloseGallery);
+
+        if (settingsCloseButton != null)
+            settingsCloseButton.onClick.AddListener(CloseSettings);
 
         // 初始化：隐藏所有面板
-        if (tutorialPanel != null) tutorialPanel.SetActive(false);
-        if (galleryPanel != null) galleryPanel.SetActive(false);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
+        HideAllPanels();
     }
 
-    // 开始游戏
     void StartGame()
     {
         SceneManager.LoadScene("TestLevel1");
     }
 
-    // 显示教程面板
-    void ShowTutorialPanel()
+    void OpenTutorial()
     {
-        HideAllPanels(); 
+        Debug.Log("打开教程面板");
         if (tutorialPanel != null)
         {
             tutorialPanel.SetActive(true);
-            Time.timeScale = 0f; 
+            SetMainButtonsInteractable(false);
         }
     }
 
-    // 显示图鉴面板
-    void ShowGalleryPanel()
+    void OpenGallery()
     {
-        HideAllPanels();
+        Debug.Log("打开图鉴面板");
         if (galleryPanel != null)
         {
             galleryPanel.SetActive(true);
-            Time.timeScale = 0f;
+            SetMainButtonsInteractable(false);
         }
     }
 
-    // 显示设置面板
-    void ShowSettingsPanel()
+    void OpenSettings()
     {
-        HideAllPanels();
+        Debug.Log("打开设置面板");
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(true);
-            Time.timeScale = 0f;
+            SetMainButtonsInteractable(false);
         }
     }
 
-    // 隐藏教程面板
-    void HideTutorialPanel()
+    // 关闭按钮功能
+    void CloseTutorial()
     {
+        Debug.Log("关闭教程面板");
         if (tutorialPanel != null)
         {
             tutorialPanel.SetActive(false);
-            Time.timeScale = 1f; 
+            SetMainButtonsInteractable(true);
         }
     }
 
-    // 隐藏图鉴面板
-    void HideGalleryPanel()
+    void CloseGallery()
     {
+        Debug.Log("关闭图鉴面板");
         if (galleryPanel != null)
         {
             galleryPanel.SetActive(false);
-            Time.timeScale = 1f;
+            SetMainButtonsInteractable(true);
         }
     }
 
-    // 隐藏设置面板
-    void HideSettingsPanel()
+    void CloseSettings()
     {
+        Debug.Log("关闭设置面板");
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(false);
-            Time.timeScale = 1f;
+            SetMainButtonsInteractable(true);
         }
     }
 
-    // 隐藏所有面板
-    void HideAllPanels()
+    // 修改为public，让其他脚本可以调用
+    public void SetMainButtonsInteractable(bool interactable)
     {
-        HideTutorialPanel();
-        HideGalleryPanel();
-        HideSettingsPanel();
+        if (startButton != null) startButton.interactable = interactable;
+        if (tutorialButton != null) tutorialButton.interactable = interactable;
+        if (galleryButton != null) galleryButton.interactable = interactable;
+        if (settingsButton != null) settingsButton.interactable = interactable;
+        if (quitButton != null) quitButton.interactable = interactable;
     }
 
-    // 退出游戏
+    // 添加缺少的OnTutorialClosed方法
+    public void OnTutorialClosed()
+    {
+        Debug.Log("接收到教程关闭通知");
+        SetMainButtonsInteractable(true);
+    }
+
+    void HideAllPanels()
+    {
+        if (tutorialPanel != null) tutorialPanel.SetActive(false);
+        if (galleryPanel != null) galleryPanel.SetActive(false);
+        if (settingsPanel != null) settingsPanel.SetActive(false);
+    }
+
     void QuitGame()
     {
-
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif

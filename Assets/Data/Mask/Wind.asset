@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2569964828df314da6b2d88ed24f41d, type: 3}
+  m_Name: Wind
+  m_EditorClassIdentifier: 
+  maskName: 2
+  description: 
+  icon: {fileID: 0}
+  maskPrefab: {fileID: 0}
+  attackBonus: 6
+  healthBonus: 0
+  speedMultiplier: 1
+  canDoubleJump: 1
+  normalAttackDesc: "\u8FD1\u6218\uFF0C\u77ED\u8DDD\u79BB\u77ED\u5203\u653B\u51FB\r\n\u653B\u51FB\u529B+6\r\n"
+  skillDesc: "\u79FB\u52A8\u901F\u5EA6\u589E\u52A0\uFF0C\u9020\u6210\u4F24\u5BB3\u5927\u5E45\u63D0\u9AD8\uFF0C\u51B7\u537420s"
+  skillCooldown: 20
+  specialEffectDesc: "\u79FB\u52A8\u901F\u5EA6\u5C11\u91CF\u589E\u52A0\uFF0C\u89E3\u9501\u4E8C\u6BB5\u8DF3"
+  unlockCondition: 
+  prefabInfo:
+    prefabName: 
+    hasAnimator: 0
+    hasCollider: 0
+    hasRigidbody: 0
+    componentCount: 0
+    assetPath: 

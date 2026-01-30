@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -45,7 +45,7 @@ public class BasicControl : MonoBehaviour
         {
             float h = Input.GetAxis("Horizontal");
 
-            // 使用当前实际移动速度
+            // 脢鹿脫脙碌卤脟掳脢碌录脢脪脝露炉脣脵露脠
             _rb.velocity = new Vector2(h * GameDataManager.Instance.moveSpeed, _rb.velocity.y);
         }
         else

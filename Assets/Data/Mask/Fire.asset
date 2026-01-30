@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2569964828df314da6b2d88ed24f41d, type: 3}
+  m_Name: Fire
+  m_EditorClassIdentifier: 
+  maskName: 1
+  description: 
+  icon: {fileID: 0}
+  maskPrefab: {fileID: 0}
+  attackBonus: 6
+  healthBonus: 0
+  speedMultiplier: 1
+  canDoubleJump: 0
+  normalAttackDesc: "\u8FDC\u7A0B\uFF0C\u76F4\u7EBF\u53D1\u5C04\u4E00\u679A\u706B\u7403\r\n\u653B\u51FB\u529B+6\r\n"
+  skillDesc: "\u89D2\u8272\u5468\u56F4\u51FA\u73B0\u4E00\u5708\u73AF\u7ED5\u706B\u5899\uFF0C\u78B0\u5230\u7684\u602A\u7269\u4F1A\u53D7\u5230\u4F24\u5BB3\uFF0C\u81EA\u8EAB\u53D7\u5230\u4F24\u5BB3\u964D\u4F4E\uFF0C\u51B7\u537430s"
+  skillCooldown: 30
+  specialEffectDesc: "\u65E0"
+  unlockCondition: 
+  prefabInfo:
+    prefabName: 
+    hasAnimator: 0
+    hasCollider: 0
+    hasRigidbody: 0
+    componentCount: 0
+    assetPath: 
