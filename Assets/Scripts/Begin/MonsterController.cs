@@ -4,11 +4,11 @@ using UnityEngine.UI;
 public class MonsterController : MonoBehaviour
 {
     [Header("面板引用")]
-    public GameObject monsterPanel;        // 怪物图鉴面板
-    public GameObject monsterDetailPanel;  // 怪物详情面板
+    public GameObject monsterPanel;        
+    public GameObject monsterDetailPanel;  
 
     [Header("怪物按钮")]
-    public Button[] monsterButtons;        // 你的怪物按钮
+    public Button[] monsterButtons;        
 
     [Header("详情页按钮")]
     public Button closeMonsterDetailButton;  // 关闭按钮（回主页）
