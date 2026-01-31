@@ -64,6 +64,8 @@ public class ChangeMaskManager : MonoBehaviour
                 ok.onClick.AddListener(() =>
                 {
                     Time.timeScale = 1;
+                    PlayerInfoManager.Instance.infos.SetActive(true);
+                    PlayerInfoManager.Instance.skilltips.SetActive(true);
                     foreach (GameObject go in FindObjectsOfType<GameObject>())
                     {
                         if (go.name == "Fireball(Clone)"|| go.name == "Ghost")
@@ -84,7 +86,7 @@ public class ChangeMaskManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)&&PlayerInfoManager.Instance.savemasktime<=0&&!GameDataManager.Instance.banE)
         {
             ChangeMask();
         }

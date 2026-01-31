@@ -59,13 +59,13 @@ public class IceMask : MonoBehaviour
             SimpleAttack();
         }
 
-        if (Input.GetKeyDown(KeyCode.L)&&cooldownTimer==0)
+        if (Input.GetKeyDown(KeyCode.L)&&cooldownTimer==0 && PlayerInfoManager.Instance.saveaimtime <= 0 && !GameDataManager.Instance.banL)
         {
             player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
             player.GetComponent<BasicControl>().StopAction(duration);
             model.SetActive(true);
             cooldownTimer = skillCooldown;
-            PlayerInfoManager.Instance.SkillCoolDown(skillCooldown);
+            PlayerInfoManager.Instance.SkillCoolDown(skillCooldown, skillCooldown + 5);
             Resetskill();
             StartCoroutine(CastLaser());
         }

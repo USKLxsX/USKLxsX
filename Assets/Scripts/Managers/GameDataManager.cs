@@ -51,21 +51,24 @@ public class GameDataManager : MonoBehaviour
     [Header("��ҹ������")]
     public float attackCooldown;
 
+    public bool banE = false;
+    public bool banL = false;
+
     float savespeed;//��¼��ǰ�ٶ�
     float savedamage;
     float saveattackcooldown;
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+        //if (instance == null)
+        //{
+        //    instance = this;
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else if (instance != this)
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
 
@@ -139,6 +142,6 @@ public class GameDataManager : MonoBehaviour
     public void ChangeMask(int id)
     {
         playerType = (Type)id;
-        PlayerInfoManager.Instance.saveaimtime = 0;
+        PlayerInfoManager.Instance.SkillCoolDown(10,10);
     }
 }

@@ -227,5 +227,14 @@ public class BasicControl : MonoBehaviour
     public void TakeDamage(float damage)
     {
         GameDataManager.Instance.health -= damage;
+        StartCoroutine(Hurt());
+    }
+
+    IEnumerator Hurt()
+    {
+        render.color = Color.red;
+        yield return new WaitForSeconds(0.15f);
+        render.color = Color.white;
+        yield break;
     }
 }

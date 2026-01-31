@@ -44,12 +44,12 @@ public class IronMask : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.L)&&cooldownTimer==0)
+        if (Input.GetKeyDown(KeyCode.L)&&cooldownTimer==0 && PlayerInfoManager.Instance.saveaimtime <= 0 && !GameDataManager.Instance.banL)
         {
             player.GetComponent<BasicControl>().attacking = true;
             player.GetComponent<Animator>().SetTrigger("HitAttack");
             cooldownTimer = skillCooldown;
-            PlayerInfoManager.Instance.SkillCoolDown(skillCooldown);
+            PlayerInfoManager.Instance.SkillCoolDown(skillCooldown, skillCooldown+5);
             StartCoroutine(DashAttack());
 
         }
