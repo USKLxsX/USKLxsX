@@ -216,6 +216,8 @@ public class Vampire : Monster
         if (attackTimer >= monsterdata.attackCooldown)
         {
             attackTimer = 0;
+            
+            anim.SetTrigger("Melee");
         }
         
         if (isPlayerInRangedZone && playerInZoneCollider != null)
@@ -225,6 +227,8 @@ public class Vampire : Monster
             if (dpsTimer >= 1.0f)
             {
                 dpsTimer = 0f;
+                
+                anim.SetTrigger("Ranged");
                 
                 Attack(playerInZoneCollider, 1); 
             
@@ -254,9 +258,22 @@ public class Vampire : Monster
 
     public override void Die()
     {
+        if (_isDead) return;
         _isDead = true;
-        StopAllCoroutines();
-        Destroy(gameObject);
+    
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 1;
+    
+        anim.SetTrigger("Die");
+        
+        GetComponent<Collider2D>().enabled = false;
+        
+        Destroy(gameObject, 2f);
+    }
+    
+    private void LoadAnimationState()
+    {
+        anim.SetBool("isFlying", rb.velocity.magnitude > 0.1f || currentState == State.Idle);
     }
     
     private Vector2 GetRandomPointInBounds()
