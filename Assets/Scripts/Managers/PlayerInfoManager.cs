@@ -37,6 +37,7 @@ public class PlayerInfoManager : MonoBehaviour
     [SerializeField] private float fadetime;
     public UnityEngine.UI.Image SkillIcon;
     public UnityEngine.UI.Image SkillCoolDownImage;
+    public UnityEngine.UI.Image ChangeMaskCoolImage;
     public List<Sprite> maskicons=new List<Sprite>(6);
     public List<Sprite> skillicons;
     public List<Color> tagcolors;
